@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /email-preview
+
+Sitemap: https://redpostrealty.com/sitemap.xml
