@@ -1,5 +1,5 @@
 /**
- * Leads API - submits form data (no Supabase).
+ * Leads API - submits form data to Formspree or custom endpoint.
  * Uses Formspree or custom endpoint via env.
  */
 

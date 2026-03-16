@@ -4,7 +4,6 @@ interface CommandButtonProps {
   onClick?: () => void;
   children?: React.ReactNode;
   className?: string;
-  variant?: 'default' | 'red';
   showPhone?: boolean;
 }
 
@@ -20,17 +19,14 @@ export default function CommandButton({
   onClick,
   children = 'GET_STARTED',
   className = '',
-  variant = 'default',
   showPhone = true,
 }: CommandButtonProps) {
-  const variantClass = variant === 'red' ? 'command-btn--red' : '';
-
   return (
     <div className="command-btn-wrapper">
       <button
         type="button"
         onClick={onClick ?? scrollToForm}
-        className={`command-btn ${variantClass} ${className}`}
+        className={`command-btn ${className}`}
       >
         {children}
       </button>

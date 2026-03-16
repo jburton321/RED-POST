@@ -508,16 +508,6 @@ h1 {
   100% { --rotate: 360deg; }
 }
 
-.command-btn--red {
-  background: var(--red);
-}
-
-.command-btn--red:hover {
-  background: #e5252c;
-  letter-spacing: 7px;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-}
-
 .command-btn-wrapper {
   display: flex;
   flex-direction: column;
