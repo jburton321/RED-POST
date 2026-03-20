@@ -12,13 +12,11 @@ const STATUS_OPTIONS = [
 
 interface Props extends StepProps {
   onBack: () => void;
-  onSubmit: () => void;
-  submitting: boolean;
-  submitError?: string | null;
+  onNext: () => void;
 }
 
-export default function StepContact({ data, updateField, onBack, onSubmit, submitting, submitError }: Props) {
-  const canSubmit = data.agreedToTerms && data.email.trim() !== '' && data.firstName.trim() !== '' && !submitting;
+export default function StepContact({ data, updateField, onBack, onNext }: Props) {
+  const canProceed = data.agreedToTerms && data.email.trim() !== '' && data.firstName.trim() !== '';
 
   return (
     <div>
@@ -132,15 +130,12 @@ export default function StepContact({ data, updateField, onBack, onSubmit, submi
         </span>
       </label>
 
-      {submitError && (
-        <p className="font-['Poppins'] text-[11px] text-[#d21920] mb-2">{submitError}</p>
-      )}
       <div className="form-nav">
         <CTAButton variant="stroke" showBack onClick={onBack}>
           BACK
         </CTAButton>
-        <CTAButton variant="filled" showArrow disabled={!canSubmit} onClick={onSubmit}>
-          {submitting ? 'SUBMITTING...' : 'GET MY BRIEFING'}
+        <CTAButton variant="filled" showArrow disabled={!canProceed} onClick={onNext}>
+          NEXT STEP
         </CTAButton>
       </div>
     </div>

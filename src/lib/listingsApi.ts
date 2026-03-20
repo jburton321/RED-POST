@@ -1,12 +1,10 @@
 /**
- * Listings API - fetches from backend proxy (Ruuster).
+ * Listings API - fetches from configured endpoint.
  * Handles multiple response formats. Falls back to static data when API fails.
  */
 
 import type { ListingRecord } from './listings';
-
-const API_BASE = import.meta.env.VITE_API_BASE ?? '';
-const LISTINGS_URL = import.meta.env.VITE_LISTINGS_URL ?? '';
+import { LISTINGS_URL } from './api';
 
 type ListingRow = Record<string, unknown>;
 

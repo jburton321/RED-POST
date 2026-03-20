@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://redpostrealty.ruuster.com',
+        target: process.env.VITE_API_PROXY ?? 'https://redpostrealty.ruuster.com',
         changeOrigin: true,
       },
     },

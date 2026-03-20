@@ -1,15 +1,19 @@
 /**
  * Leads API - submits form data to Formspree or custom endpoint.
- * Uses Formspree or custom endpoint via env.
+ * When no endpoint is configured, runs in dummy mode (simulates success).
  */
 
-const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID ?? '';
-const LEADS_ENDPOINT = import.meta.env.VITE_LEADS_ENDPOINT ?? '';
+import { FORMSPREE_ID, LEADS_ENDPOINT } from './api';
 
-export interface LeadPayload {
+/** Minimal payload for dummy mode (no endpoint configured). */
+export interface DummyLeadPayload {
   firstName: string;
   lastName: string;
   email: string;
+}
+
+/** Full payload for real submissions (Formspree or custom endpoint). */
+export interface LeadPayload extends DummyLeadPayload {
   phone?: string;
   currentStatus?: string;
   lifestyleValues?: string[];
@@ -23,17 +27,17 @@ export interface LeadPayload {
   agreedToTerms?: boolean;
 }
 
-function getEndpoint(): string {
+function getLeadsUrl(): string {
   if (LEADS_ENDPOINT) return LEADS_ENDPOINT;
   if (FORMSPREE_ID) return `https://formspree.io/f/${FORMSPREE_ID}`;
   return '';
 }
 
-export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean; error?: string }> {
-  const url = getEndpoint();
+export async function submitLead(payload: LeadPayload | DummyLeadPayload): Promise<{ ok: boolean; error?: string }> {
+  const url = getLeadsUrl();
   if (!url) {
-    console.warn('No leads endpoint configured. Set VITE_FORMSPREE_ID or VITE_LEADS_ENDPOINT.');
-    return { ok: false, error: 'Leads not configured' };
+    // Dummy mode: no endpoint configured, simulate success until database is connected
+    return { ok: true };
   }
 
   const isFormspree = url.includes('formspree.io');

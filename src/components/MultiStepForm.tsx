@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import WelcomeScreen from './form/WelcomeScreen';
+import StepContact from './form/StepContact';
 import StepLifestyle from './form/StepLifestyle';
 import StepLocation from './form/StepLocation';
 import StepProperty from './form/StepProperty';
 import StepTimeline from './form/StepTimeline';
-import StepContact from './form/StepContact';
 import FormSuccess from './form/FormSuccess';
 import { submitLead } from '../lib/leadsApi';
 import type { FormData } from '../types/form';
@@ -28,7 +28,7 @@ const INITIAL_FORM: FormData = {
 
 const TOTAL_STEPS = 5;
 
-const STEP_LABELS = ['Lifestyle', 'Location', 'Property', 'Timeline', 'Contact'];
+const STEP_LABELS = ['Contact', 'Lifestyle', 'Location', 'Property', 'Timeline'];
 
 export default function MultiStepForm() {
   const [step, setStep] = useState(0);
@@ -42,7 +42,7 @@ export default function MultiStepForm() {
   };
 
   const next = () => setStep(s => Math.min(s + 1, TOTAL_STEPS));
-  const back = () => setStep(s => Math.max(s - 1, 1));
+  const back = () => setStep(s => Math.max(s - 1, 0));
   const startForm = () => setStep(1);
 
   const handleSubmit = async () => {
@@ -129,12 +129,19 @@ export default function MultiStepForm() {
           })}
         </div>
 
-        {step === 1 && <StepLifestyle data={formData} updateField={updateField} onNext={next} />}
-        {step === 2 && <StepLocation data={formData} updateField={updateField} onNext={next} onBack={back} />}
-        {step === 3 && <StepProperty data={formData} updateField={updateField} onNext={next} onBack={back} />}
-        {step === 4 && <StepTimeline data={formData} updateField={updateField} onNext={next} onBack={back} />}
-        {step === 5 && (
+        {step === 1 && (
           <StepContact
+            data={formData}
+            updateField={updateField}
+            onBack={back}
+            onNext={next}
+          />
+        )}
+        {step === 2 && <StepLifestyle data={formData} updateField={updateField} onNext={next} />}
+        {step === 3 && <StepLocation data={formData} updateField={updateField} onNext={next} onBack={back} />}
+        {step === 4 && <StepProperty data={formData} updateField={updateField} onNext={next} onBack={back} />}
+        {step === 5 && (
+          <StepTimeline
             data={formData}
             updateField={updateField}
             onBack={back}

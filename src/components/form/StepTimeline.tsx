@@ -29,11 +29,16 @@ const TIMELINE_OPTIONS = [
 ];
 
 interface Props extends StepProps {
-  onNext: () => void;
   onBack: () => void;
+  onNext?: () => void;
+  onSubmit?: () => void;
+  submitting?: boolean;
+  submitError?: string | null;
 }
 
-export default function StepTimeline({ data, updateField, onNext, onBack }: Props) {
+export default function StepTimeline({ data, updateField, onBack, onNext, onSubmit, submitting, submitError }: Props) {
+  const isLastStep = !!onSubmit;
+  const canSubmit = !submitting;
   return (
     <div>
       <div className="step-header">
@@ -73,13 +78,22 @@ export default function StepTimeline({ data, updateField, onNext, onBack }: Prop
         })}
       </div>
 
+      {submitError && (
+        <p className="font-['Poppins'] text-[11px] text-[#d21920] mb-2">{submitError}</p>
+      )}
       <div className="form-nav">
         <CTAButton variant="stroke" showBack onClick={onBack}>
           BACK
         </CTAButton>
-        <CTAButton variant="filled" showArrow onClick={onNext}>
-          NEXT STEP
-        </CTAButton>
+        {isLastStep ? (
+          <CTAButton variant="filled" showArrow disabled={!canSubmit} onClick={onSubmit}>
+            {submitting ? 'SUBMITTING...' : 'GET MY BRIEFING'}
+          </CTAButton>
+        ) : (
+          <CTAButton variant="filled" showArrow onClick={onNext}>
+            NEXT STEP
+          </CTAButton>
+        )}
       </div>
     </div>
   );

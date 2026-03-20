@@ -27,10 +27,16 @@ export async function fetchLiveListings(): Promise<ListingsResponse> {
   try {
     const records = await fetchListingsFromApi();
     if (!records || records.length === 0) {
+      if (import.meta.env.DEV) {
+        console.warn('[Listings] API returned empty data, using fallback');
+      }
       return { records: FALLBACK_LISTINGS, totalCount: FALLBACK_LISTINGS.length };
     }
     return { records, totalCount: records.length };
-  } catch {
+  } catch (err) {
+    if (import.meta.env.DEV) {
+      console.warn('[Listings] API failed, using fallback:', err instanceof Error ? err.message : err);
+    }
     return { records: FALLBACK_LISTINGS, totalCount: FALLBACK_LISTINGS.length };
   }
 }
