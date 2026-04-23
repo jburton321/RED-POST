@@ -27,16 +27,19 @@ export async function fetchLiveListings(): Promise<ListingsResponse> {
   try {
     const records = await fetchListingsFromApi();
     if (!records || records.length === 0) {
-      if (import.meta.env.DEV) {
-        console.warn('[Listings] API returned empty data, using fallback');
-      }
+      console.warn(
+        '[Listings] API returned no records — using static fallback. For live data: set RUUSTER_LISTINGS_EXTRA_PARAMS (e.g. slug=…) on Vercel, and the same in .env for npm run dev (proxy reads it).'
+      );
       return { records: FALLBACK_LISTINGS, totalCount: FALLBACK_LISTINGS.length };
     }
     return { records, totalCount: records.length };
   } catch (err) {
-    if (import.meta.env.DEV) {
-      console.warn('[Listings] API failed, using fallback:', err instanceof Error ? err.message : err);
-    }
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(
+      '[Listings] API failed — using static fallback.',
+      msg,
+      'Ruuster requires slug=… in the upstream URL; confirm /api/listings returns 200 (try vercel dev or production).'
+    );
     return { records: FALLBACK_LISTINGS, totalCount: FALLBACK_LISTINGS.length };
   }
 }

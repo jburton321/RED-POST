@@ -1,14 +1,29 @@
 /**
  * Vercel serverless function: proxies listings from Ruuster API.
- * Set RUUSTER_API_URL and optionally RUUSTER_API_KEY in Vercel env.
+ * Set RUUSTER_API_URL, RUUSTER_API_KEY, and optional RUUSTER_LISTINGS_EXTRA_PARAMS in Vercel env.
  */
 
 const RUUSTER_BASE = process.env.RUUSTER_API_URL ?? 'https://redpostrealty.ruuster.com/api';
 const RUUSTER_API_KEY = process.env.RUUSTER_API_KEY ?? '';
 
+/** Optional extra query string forwarded to Ruuster, e.g. "limit=200&sort=updated_at" (confirm names with Ruuster). */
+const RUUSTER_LISTINGS_EXTRA_PARAMS = process.env.RUUSTER_LISTINGS_EXTRA_PARAMS ?? '';
+
 export const config = {
   runtime: 'edge',
 };
+
+/** Query keys allowed from the browser request onto the upstream URL (avoid leaking arbitrary params). */
+const FORWARD_QUERY_KEYS = [
+  'sort',
+  'order',
+  'sortBy',
+  'limit',
+  'per_page',
+  'page',
+  'offset',
+  'updated_since',
+];
 
 export default async function handler(req: Request) {
   if (req.method === 'OPTIONS') {
@@ -30,12 +45,31 @@ export default async function handler(req: Request) {
     });
   }
 
-  const url = new URL(`${RUUSTER_BASE}/listings`);
+  const base = RUUSTER_BASE.replace(/\/$/, '');
+  const url = new URL(`${base}/listings`);
   url.searchParams.set('status', 'Active');
+
+  if (RUUSTER_LISTINGS_EXTRA_PARAMS) {
+    const parsed = new URLSearchParams(RUUSTER_LISTINGS_EXTRA_PARAMS);
+    parsed.forEach((value, key) => {
+      if (value !== '') url.searchParams.set(key, value);
+    });
+  }
+
+  try {
+    const reqUrl = new URL(req.url);
+    for (const key of FORWARD_QUERY_KEYS) {
+      const v = reqUrl.searchParams.get(key);
+      if (v != null && v !== '') url.searchParams.set(key, v);
+    }
+  } catch {
+    /* ignore malformed req.url */
+  }
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
+    'Cache-Control': 'no-cache',
   };
   if (RUUSTER_API_KEY) {
     headers['Authorization'] = `Bearer ${RUUSTER_API_KEY}`;
@@ -43,7 +77,10 @@ export default async function handler(req: Request) {
   }
 
   try {
-    const res = await fetch(url.toString(), { headers });
+    const res = await fetch(url.toString(), {
+      headers,
+      cache: 'no-store',
+    });
     const data = await res.json();
 
     if (!res.ok) {
@@ -64,7 +101,7 @@ export default async function handler(req: Request) {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60',
+        'Cache-Control': 'no-store',
       },
     });
   } catch (err) {
