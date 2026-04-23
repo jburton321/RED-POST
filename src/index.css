@@ -6235,6 +6235,12 @@ section#reviews {
   .nav-mobile-toggle { min-width: 44px; min-height: 44px; }
   .acq-tab { min-height: 44px; display: flex; align-items: center; }
   .acq-advanced-toggle { min-height: 44px; }
+  .dossier-map-container {
+    border-radius: 50px 50px 0 0;
+  }
+  .dossier-map-container .leaflet-container {
+    border-radius: 50px 50px 0 0;
+  }
   .dossier-map-overlay {
     top: auto;
     bottom: 20px;
