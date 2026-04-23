@@ -650,21 +650,11 @@ img { max-width: 100%; height: auto; }
 
 .hero-text-block { flex: 1; padding: 0 var(--gutter); }
 
-/* Hero only: global h1 goes up to 93px — too large beside the lead form on tablet / small desktop */
-.hero-text-block h1 {
-  font-family: 'Poppins', sans-serif;
-  font-size: clamp(26px, 4.2vw, 52px);
-  line-height: 1.08;
-  color: var(--white);
-  margin: 10px 0;
-  letter-spacing: -0.05em;
-}
-
 .hero-text-block h1 .hero-h1-sup {
   display: inline-block;
   margin-top: 0.12em;
-  font-size: clamp(10px, 1.65vw, 15px);
-  line-height: 1.2;
+  font-size: 0.42em;
+  line-height: 1.15;
   font-weight: 700;
   letter-spacing: -0.02em;
   vertical-align: baseline;
