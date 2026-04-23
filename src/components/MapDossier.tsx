@@ -253,7 +253,6 @@ export default function MapDossier() {
       )}
 
       <style>{`
-        .leaflet-container { background: #000 !important; }
         .custom-marker-icon { background: transparent !important; border: none !important; }
       `}</style>
     </div>

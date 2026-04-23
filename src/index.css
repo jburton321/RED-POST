@@ -655,11 +655,21 @@ img { max-width: 100%; height: auto; }
   margin-top: 0.12em;
   font-size: 0.42em;
   line-height: 1.15;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: -0.02em;
   vertical-align: baseline;
   top: 0;
   color: var(--red);
+}
+
+.hero-text-block .hero-h1-sub {
+  margin: 0.65rem 0 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(14px, 1.35vw, 17px);
+  line-height: 1.45;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.82);
 }
 
 h1 {
@@ -3432,6 +3442,10 @@ h1 {
   .hero-text-block h1 .hero-h1-sup {
     font-size: clamp(9px, 1.55vw, 13px);
   }
+  .hero-text-block .hero-h1-sub {
+    margin-top: 0.5rem;
+    font-size: clamp(13px, 2.8vw, 15px);
+  }
   .glow-card { margin: 0 var(--gutter) 40px var(--gutter); width: calc(100% - calc(var(--gutter) * 2)); max-width: 520px; min-width: 0; }
   .stats-counter-section { padding: 60px 0; }
   .eclipse-headline { font-size: clamp(28px, 5vw, 56px); }
@@ -6146,6 +6160,15 @@ section#reviews {
 }
 
 /* ── Responsive System ── */
+
+.dossier-map-container {
+  border-radius: 75px 75px 0 0;
+}
+
+.dossier-map-container .leaflet-container {
+  border-radius: 75px 75px 0 0;
+  background: #000 !important;
+}
 
 .dossier-map-overlay {
   position: absolute;
