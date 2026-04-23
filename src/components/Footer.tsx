@@ -1,10 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchLiveListings } from '../lib/listings';
+import { useListings } from '../context/ListingsContext';
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
-  const [syncDate, setSyncDate] = useState<string>('Loading...');
+  const { records, initialLoading } = useListings();
+
+  const syncDate = useMemo(() => {
+    if (initialLoading && records.length === 0) return 'Loading…';
+    if (records.length === 0) return '—';
+    return new Date(records[0].labelUpdatedAt).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  }, [records, initialLoading]);
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -20,21 +30,6 @@ export default function Footer() {
     setSpacing();
     window.addEventListener('resize', setSpacing);
     return () => window.removeEventListener('resize', setSpacing);
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetchLiveListings().then((res) => {
-      if (cancelled || res.records.length === 0) return;
-      const raw = res.records[0].labelUpdatedAt;
-      const formatted = new Date(raw).toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-      });
-      setSyncDate(formatted);
-    });
-    return () => { cancelled = true; };
   }, []);
 
   return (

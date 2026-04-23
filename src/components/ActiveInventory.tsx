@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import CommandButton from './CommandButton';
 import PropertyCard from './PropertyCard';
 import PropertyListItem from './PropertyListItem';
@@ -6,7 +6,7 @@ import PropertyMapView from './PropertyMapView';
 import PropertyLightbox from './PropertyLightbox';
 import ViewToggle from './ViewToggle';
 import type { ViewMode } from './ViewToggle';
-import { fetchLiveListings } from '../lib/listings';
+import { useListings } from '../context/ListingsContext';
 import type { ListingRecord } from '../lib/listings';
 
 const INITIAL_COUNT = 4;
@@ -16,8 +16,7 @@ export default function ActiveInventory() {
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
-  const [listings, setListings] = useState<ListingRecord[]>([]);
-  const [totalCount, setTotalCount] = useState(0);
+  const { records: listings, totalCount, refreshGeneration, initialLoading } = useListings();
   const [viewMode, setViewMode] = useState<ViewMode>('card');
   const [selectedListing, setSelectedListing] = useState<ListingRecord | null>(null);
 
@@ -31,15 +30,18 @@ export default function ActiveInventory() {
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
-    fetchLiveListings().then((res) => {
-      if (!cancelled) {
-        setListings(res.records);
-        setTotalCount(res.totalCount);
-      }
+    setVisibleCount(INITIAL_COUNT);
+  }, [refreshGeneration]);
+
+  const feedLastUpdated = useMemo(() => {
+    if (listings.length === 0) return null;
+    return new Date(listings[0].labelUpdatedAt).toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
     });
-    return () => { cancelled = true; };
-  }, []);
+  }, [listings]);
 
   const showPagination = viewMode !== 'map';
   const visibleListings = showPagination
@@ -78,7 +80,20 @@ export default function ActiveInventory() {
           <CommandButton />
         </div>
 
-        {viewMode === 'card' && (
+        {initialLoading && listings.length === 0 && (
+          <div className="inv-empty-feed" role="status">
+            <p className="inv-empty-feed-title">Loading live listings…</p>
+          </div>
+        )}
+
+        {!initialLoading && listings.length === 0 && (
+          <div className="inv-empty-feed">
+            <p className="inv-empty-feed-title">No listings available</p>
+            <p className="inv-empty-feed-body">Fallback inventory failed to load. Check the console and network requests.</p>
+          </div>
+        )}
+
+        {listings.length > 0 && viewMode === 'card' && (
           <div className="inv-card-grid">
             {visibleListings.map((listing, i) => (
               <PropertyCard key={listing.id || `${listing.firstAddress}-${i}`} listing={listing} onClick={() => setSelectedListing(listing)} />
@@ -86,7 +101,7 @@ export default function ActiveInventory() {
           </div>
         )}
 
-        {viewMode === 'list' && (
+        {listings.length > 0 && viewMode === 'list' && (
           <div className="inv-list-grid">
             {visibleListings.map((listing, i) => (
               <PropertyListItem key={listing.id || `${listing.firstAddress}-${i}`} listing={listing} onClick={() => setSelectedListing(listing)} />
@@ -94,7 +109,7 @@ export default function ActiveInventory() {
           </div>
         )}
 
-        {viewMode === 'map' && (
+        {listings.length > 0 && viewMode === 'map' && (
           <PropertyMapView listings={listings} onSelectListing={setSelectedListing} />
         )}
 
@@ -115,7 +130,7 @@ export default function ActiveInventory() {
             © 2026. The multiple listing data appearing on this website is owned and copyrighted by <a href="https://primemls.com/" target="_blank" rel="noopener noreferrer" className="inv-link">PrimeMLS (NEREN)</a> and is protected by all applicable copyright laws. Information provided is for the consumer's personal, non-commercial use and may not be used for any purpose other than to identify prospective properties the consumer may be interested in purchasing.
             <br />
             <br />
-            Last updated: Saturday, February 14th, 2026.
+            Last updated: {feedLastUpdated ?? '—'}.
           </p>
         </div>
 

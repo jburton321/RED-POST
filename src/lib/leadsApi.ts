@@ -33,7 +33,7 @@ function getLeadsUrl(): string {
   return '';
 }
 
-export async function submitLead(payload: LeadPayload | DummyLeadPayload): Promise<{ ok: boolean; error?: string }> {
+export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean; error?: string }> {
   const url = getLeadsUrl();
   if (!url) {
     // Dummy mode: no endpoint configured, simulate success until database is connected

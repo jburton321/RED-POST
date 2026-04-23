@@ -20,10 +20,11 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import DMCANotice from './pages/DMCANotice';
 import EmailPreview from './pages/EmailPreview';
+import { ListingsProvider } from './context/ListingsContext';
 
 function HomePage() {
   return (
-    <>
+    <ListingsProvider>
       <Navbar />
       <div className="site-content">
         <Hero />
@@ -43,7 +44,7 @@ function HomePage() {
       </div>
       <FinalCTA />
       <Footer />
-    </>
+    </ListingsProvider>
   );
 }
 

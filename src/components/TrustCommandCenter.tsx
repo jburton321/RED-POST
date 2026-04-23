@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { Bell } from 'lucide-react';
 import CommandButton from './CommandButton';
 import PropertyLightbox from './PropertyLightbox';
-import { fetchLiveListings, formatPrice, formatUpdatedAt } from '../lib/listings';
+import { useListings } from '../context/ListingsContext';
+import { formatPrice, formatUpdatedAt } from '../lib/listings';
 import type { ListingRecord } from '../lib/listings';
 import { geocodeLocal } from '../lib/geocode';
 
@@ -50,25 +51,22 @@ function SignalMapFitter({ coords }: { coords: [number, number][] }) {
 }
 
 export default function TrustCommandCenter() {
-  const [signals, setSignals] = useState<SignalListing[]>([]);
+  const { records, initialLoading } = useListings();
+  const signals = useMemo(() => {
+    const geocoded: SignalListing[] = [];
+    for (const r of records) {
+      if (geocoded.length >= SIGNAL_LIMIT) break;
+      const coords = geocodeLocal(r.firstAddress, r.secondAddress);
+      if (coords) {
+        geocoded.push({ ...r, coords, signalType: resolveSignalType(r.label) });
+      }
+    }
+    return geocoded;
+  }, [records]);
   const [selectedListing, setSelectedListing] = useState<ListingRecord | null>(null);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const feedRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    fetchLiveListings().then((res) => {
-      const geocoded: SignalListing[] = [];
-      for (const r of res.records) {
-        if (geocoded.length >= SIGNAL_LIMIT) break;
-        const coords = geocodeLocal(r.firstAddress, r.secondAddress);
-        if (coords) {
-          geocoded.push({ ...r, coords, signalType: resolveSignalType(r.label) });
-        }
-      }
-      setSignals(geocoded);
-    });
-  }, []);
 
   return (
     <section className="trust-command-center">
@@ -148,6 +146,12 @@ export default function TrustCommandCenter() {
           </div>
 
           <div className="tcc-feed-scroll" ref={feedRef}>
+            {initialLoading && signals.length === 0 && (
+              <p className="tcc-feed-empty">Loading signals…</p>
+            )}
+            {!initialLoading && signals.length === 0 && (
+              <p className="tcc-feed-empty">No live signals (listings unavailable or not geocoded).</p>
+            )}
             {signals.map((signal, idx) => (
               <div
                 key={`${signal.firstAddress}-${idx}`}
