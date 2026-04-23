@@ -6236,10 +6236,10 @@ section#reviews {
   .acq-tab { min-height: 44px; display: flex; align-items: center; }
   .acq-advanced-toggle { min-height: 44px; }
   .dossier-map-container {
-    border-radius: 25px 25px 0 0;
+    border-radius: 15px 15px 0 0;
   }
   .dossier-map-container .leaflet-container {
-    border-radius: 25px 25px 0 0;
+    border-radius: 15px 15px 0 0;
   }
   .dossier-map-overlay {
     top: auto;
