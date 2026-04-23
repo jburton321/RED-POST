@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { CheckCircle, Clock, FileSearch, Bell, Phone } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_TEL } from '../../lib/api';
 
 interface FormSuccessProps {
   firstName: string;
@@ -82,13 +83,15 @@ export default function FormSuccess({ firstName }: FormSuccessProps) {
         })}
       </div>
 
-      <div className="form-success-call">
-        <span className="form-success-call-label">Want answers now? Call us directly.</span>
-        <a href="tel:%phone%" className="form-success-call-btn">
-          <Phone size={16} strokeWidth={2.2} />
-          <span>%phone%</span>
-        </a>
-      </div>
+      {PHONE_TEL ? (
+        <div className="form-success-call">
+          <span className="form-success-call-label">Want answers now? Call us directly.</span>
+          <a href={`tel:${PHONE_TEL}`} className="form-success-call-btn">
+            <Phone size={16} strokeWidth={2.2} />
+            <span>{PHONE_DISPLAY || PHONE_TEL}</span>
+          </a>
+        </div>
+      ) : null}
 
       <div className="form-success-footer">
         <a href="https://apps.apple.com/us/app/red-post-realty/id6479816941?l=es-MX" target="_blank" rel="noopener noreferrer" className="form-success-app-link">

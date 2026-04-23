@@ -23,3 +23,12 @@ export const LISTINGS_POLL_MS = Math.max(10_000, Number(env.VITE_LISTINGS_POLL_M
  * Parameter names must match what your Ruuster/API expects—confirm with their docs.
  */
 export const LISTINGS_CLIENT_QUERY = (env.VITE_LISTINGS_QUERY ?? '').trim();
+
+/** E.164 or tel-safe href, e.g. +16035551234 */
+export const PHONE_TEL = (env.VITE_PHONE_TEL ?? '').trim();
+
+/** Display label next to phone CTAs; falls back to PHONE_TEL */
+export const PHONE_DISPLAY = (env.VITE_PHONE_DISPLAY ?? env.VITE_PHONE_TEL ?? '').trim();
+
+/** Optional live chat URL (Tidio, Intercom, etc.); if empty, chat FAB is hidden */
+export const CHAT_URL = (env.VITE_CHAT_URL ?? '').trim();

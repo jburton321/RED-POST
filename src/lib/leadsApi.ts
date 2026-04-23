@@ -14,6 +14,8 @@ export interface DummyLeadPayload {
 
 /** Full payload for real submissions (Formspree or custom endpoint). */
 export interface LeadPayload extends DummyLeadPayload {
+  /** e.g. hero-find-home */
+  source?: string;
   phone?: string;
   currentStatus?: string;
   lifestyleValues?: string[];
@@ -58,6 +60,7 @@ export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean; e
         mustHaves: JSON.stringify(payload.mustHaves ?? []),
         timeline: payload.timeline ?? '',
         agreedToTerms: String(payload.agreedToTerms ?? false),
+        source: payload.source ?? '',
       })
     : JSON.stringify({
         first_name: payload.firstName,
@@ -74,6 +77,7 @@ export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean; e
         must_haves: payload.mustHaves,
         timeline: payload.timeline,
         agreed_to_terms: payload.agreedToTerms,
+        source: payload.source,
       });
 
   const headers: Record<string, string> = isFormspree

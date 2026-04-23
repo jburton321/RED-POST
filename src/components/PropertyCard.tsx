@@ -1,5 +1,5 @@
 import type { ListingRecord } from '../lib/listings';
-import { formatPrice, formatUpdatedAt } from '../lib/listings';
+import { formatPrice, formatUpdatedAt, listingIsSold } from '../lib/listings';
 import { handleImgError } from '../lib/imageFallback';
 
 interface PropertyCardProps {
@@ -9,21 +9,30 @@ interface PropertyCardProps {
 
 export default function PropertyCard({ listing, onClick }: PropertyCardProps) {
   const updatedLabel = formatUpdatedAt(listing.labelUpdatedAt);
+  const sold = listingIsSold(listing);
 
   return (
-    <div className="inv-card" onClick={onClick} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter') onClick?.(); }}>
+    <div
+      className="inv-card"
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') onClick?.();
+      }}
+    >
       <img src={listing.media[0]} alt={listing.firstAddress} className="inv-card-bg" loading="lazy" onError={handleImgError} />
       <div className="inv-card-blur" />
       <div className="inv-card-scanline" />
       <div className="inv-card-scrim" />
 
-      <div className={`inv-card-badge ${listing.status === 'ComingSoon' ? 'inv-card-badge--soon' : ''}`}>
-        {listing.label}
+      {sold && <div className="inv-card-sold-ribbon" aria-hidden>SOLD</div>}
+
+      <div className={`inv-card-badge ${listing.status === 'ComingSoon' ? 'inv-card-badge--soon' : ''} ${sold ? 'inv-card-badge--sold' : ''}`}>
+        {sold ? 'SOLD' : listing.label}
       </div>
 
-      {updatedLabel && (
-        <div className="inv-card-updated">{updatedLabel}</div>
-      )}
+      {updatedLabel && <div className="inv-card-updated">{updatedLabel}</div>}
 
       <div className="inv-card-overlay">
         <div className="inv-card-price">{formatPrice(listing.price)}</div>

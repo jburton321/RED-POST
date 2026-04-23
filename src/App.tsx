@@ -4,7 +4,6 @@ import Hero from './components/Hero';
 import StrategicAdvantage from './components/StrategicAdvantage';
 import AcquisitionCapacity from './components/AcquisitionCapacity';
 import TrustCommandCenter from './components/TrustCommandCenter';
-import PressTicker from './components/PressTicker';
 import ReverseEclipse from './components/ReverseEclipse';
 import MapDossier from './components/MapDossier';
 import RedAlertPortal from './components/RedAlertPortal';
@@ -12,6 +11,7 @@ import StatsCounter from './components/StatsCounter';
 import ServiceAreas from './components/ServiceAreas';
 import RelocationIntelligence from './components/RelocationIntelligence';
 import ActiveInventory from './components/ActiveInventory';
+import ChatLauncher from './components/ChatLauncher';
 import MarketValidation from './components/MarketValidation';
 import IntelFAQ from './components/IntelFAQ';
 import FinalCTA from './components/FinalCTA';
@@ -28,11 +28,10 @@ function HomePage() {
       <Navbar />
       <div className="site-content">
         <Hero />
-        <PressTicker />
+        <ActiveInventory />
         <StrategicAdvantage />
         <ReverseEclipse />
         <MapDossier />
-        <ActiveInventory />
         <AcquisitionCapacity />
         <TrustCommandCenter />
         <StatsCounter />
@@ -44,6 +43,7 @@ function HomePage() {
       </div>
       <FinalCTA />
       <Footer />
+      <ChatLauncher />
     </ListingsProvider>
   );
 }

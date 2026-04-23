@@ -1,27 +1,59 @@
 import { Bed, Bath, Maximize } from 'lucide-react';
 import type { ListingRecord } from '../lib/listings';
-import { formatPrice, formatUpdatedAt } from '../lib/listings';
+import { formatPrice, formatUpdatedAt, listingIsSold } from '../lib/listings';
 import { handleImgError } from '../lib/imageFallback';
 
 interface PropertyListItemProps {
   listing: ListingRecord;
   onClick?: () => void;
+  /** Hero strip: CSS corner ribbon, no Active/New badge or “Updated” pill */
+  presentation?: 'default' | 'heroSold';
 }
 
-export default function PropertyListItem({ listing, onClick }: PropertyListItemProps) {
+export default function PropertyListItem({
+  listing,
+  onClick,
+  presentation = 'default',
+}: PropertyListItemProps) {
   const updatedLabel = formatUpdatedAt(listing.labelUpdatedAt);
+  const sold = listingIsSold(listing);
+  const heroSold = presentation === 'heroSold';
 
   return (
-    <div className="inv-list-item" onClick={onClick} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter') onClick?.(); }}>
+    <div
+      className="inv-list-item"
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') onClick?.();
+      }}
+    >
       <div className="inv-list-img-wrap">
-        <img src={listing.media[0]} alt={listing.firstAddress} loading="lazy" onError={handleImgError} />
+        <img
+          src={listing.media[0]}
+          alt={listing.firstAddress}
+          loading={heroSold ? 'eager' : 'lazy'}
+          onError={handleImgError}
+        />
         <div className="inv-list-blur" />
         <div className="inv-list-scanline" />
-        <div className={`inv-list-badge ${listing.status === 'ComingSoon' ? 'inv-card-badge--soon' : ''}`}>
-          {listing.label}
-        </div>
-        {updatedLabel && (
-          <div className="inv-list-updated">{updatedLabel}</div>
+        {heroSold ? (
+          <div className="inv-list-sold-ribbon-graphic" aria-hidden>
+            <span className="inv-list-sold-ribbon-graphic__band">
+              <span className="inv-list-sold-ribbon-graphic__text">SOLD</span>
+            </span>
+          </div>
+        ) : (
+          <>
+            {sold && <div className="inv-card-sold-ribbon inv-card-sold-ribbon--list" aria-hidden>SOLD</div>}
+            <div
+              className={`inv-list-badge ${listing.status === 'ComingSoon' ? 'inv-card-badge--soon' : ''} ${sold ? 'inv-card-badge--sold' : ''}`}
+            >
+              {sold ? 'SOLD' : listing.label}
+            </div>
+            {updatedLabel && <div className="inv-list-updated">{updatedLabel}</div>}
+          </>
         )}
       </div>
 

@@ -44,6 +44,11 @@ export async function fetchLiveListings(): Promise<ListingsResponse> {
   }
 }
 
+export function listingIsSold(listing: ListingRecord): boolean {
+  const blob = `${listing.status} ${listing.label}`.toLowerCase();
+  return /\b(sold|closed)\b/.test(blob);
+}
+
 export function formatPrice(price: number): string {
   return `$${price.toLocaleString()}`;
 }

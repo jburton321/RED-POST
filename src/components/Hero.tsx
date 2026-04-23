@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
-import MultiStepForm from './MultiStepForm';
-import CommandButton from './CommandButton';
+import HeroLeadForm from './HeroLeadForm';
+import HeroListingStrip from './HeroListingStrip';
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -31,16 +31,19 @@ export default function Hero() {
 
       <div className="hero-content">
         <div className="hero-text-block">
-          <div className="brand-tag">STRATEGIC ACQUISITIONS</div>
-          <h1>Complete Your Profile and Get<br /><span className="text-red">5 Off-Market Listings</span></h1>
-          <p className="hero-sub">Fill out your buyer profile and we'll match you with exclusive properties before they hit the open market.</p>
-          <CommandButton />
+          <h1>
+            Get Active Seacoast Open House Listings
+            <br />
+            <sup className="text-red hero-h1-sup">Plus Early Access to 5 Off-Market Homes</sup>
+          </h1>
         </div>
 
-        <div id="hero-form" className="glow-card">
-          <MultiStepForm />
+        <div id="hero-form" className="glow-card glow-card--hero-form">
+          <HeroLeadForm />
         </div>
       </div>
+
+      <HeroListingStrip />
     </section>
   );
 }

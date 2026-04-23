@@ -1,4 +1,5 @@
 import { Phone } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_TEL } from '../lib/api';
 
 interface CommandButtonProps {
   onClick?: () => void;
@@ -30,8 +31,12 @@ export default function CommandButton({
       >
         {children}
       </button>
-      {showPhone && (
-        <a href="tel:%phone%" className="command-btn-phone">
+      {showPhone && PHONE_TEL && (
+        <a
+          href={`tel:${PHONE_TEL}`}
+          className="command-btn-phone"
+          aria-label={PHONE_DISPLAY ? `Call ${PHONE_DISPLAY}` : 'Call Red Post Realty'}
+        >
           <span className="command-btn-phone__text">Want answers now? Call us directly.</span>
           <Phone size={16} strokeWidth={2} className="command-btn-phone__icon" />
         </a>
