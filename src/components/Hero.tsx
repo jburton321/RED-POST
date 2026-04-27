@@ -34,7 +34,7 @@ export default function Hero() {
           <h1>
             Get Active Seacoast Open House Listings
             <br />
-            <sup className="text-red hero-h1-sup">Plus Early Access to 5 Off-Market Homes</sup>
+            <sup className="hero-h1-sup">Plus Early Access to 5 Off-Market Homes</sup>
           </h1>
           <p className="hero-h1-sub">
             Fill out your buyer profile and we&apos;ll match you with exclusive properties before
