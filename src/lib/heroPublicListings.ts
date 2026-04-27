@@ -38,6 +38,16 @@ function toRecord(row: PublicRow): ListingRecord | null {
   const bathrooms = Number(row.bathrooms ?? row.baths ?? 0) || 0;
   const square = Number(row.square ?? row.sqft ?? 0) || 0;
 
+  const lotRaw = row.lotSizeAcres ?? row.lot_acres ?? row.acres ?? row.lotAcres;
+  let lotSizeAcres: number | undefined;
+  if (lotRaw != null && lotRaw !== '') {
+    const n =
+      typeof lotRaw === 'number' && !Number.isNaN(lotRaw)
+        ? lotRaw
+        : Number(String(lotRaw).replace(/[^0-9.]/g, ''));
+    if (!Number.isNaN(n) && n > 0) lotSizeAcres = n;
+  }
+
   let media: string[] = [];
   if (Array.isArray(row.media) && row.media.length > 0) {
     media = row.media
@@ -66,6 +76,7 @@ function toRecord(row: PublicRow): ListingRecord | null {
     bedrooms,
     bathrooms,
     square,
+    ...(lotSizeAcres != null ? { lotSizeAcres } : {}),
     media,
   };
 }

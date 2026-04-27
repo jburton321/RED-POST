@@ -9,6 +9,7 @@
       "bedrooms": 0,
       "bathrooms": 0,
       "square": 6970,
+      "lotSizeAcres": 0.16,
       "media": ["/images/hero-sold/01.png"]
     },
     {
