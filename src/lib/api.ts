@@ -19,6 +19,18 @@ export const LEADS_ENDPOINT = env.VITE_LEADS_ENDPOINT || '';
 export const LISTINGS_POLL_MS = Math.max(10_000, Number(env.VITE_LISTINGS_POLL_MS) || 45_000);
 
 /**
+ * Hero sold strip: fetch this JSON. Default respects `import.meta.env.BASE_URL` (subpath deploys).
+ */
+export const HERO_STRIP_LISTINGS_URL = (() => {
+  const fromEnv = (env.VITE_HERO_STRIP_LISTINGS_URL ?? '').trim();
+  if (fromEnv) return fromEnv;
+  const base = env.BASE_URL ?? '/';
+  const p = '/hero-sold-listings.json';
+  if (base === '/' || base === '') return p;
+  return `${base.replace(/\/$/, '')}${p}`;
+})();
+
+/**
  * Optional query string appended to listings requests (local dev). Example: `limit=200&sort=updated_at`
  * Parameter names must match what your Ruuster/API expects—confirm with their docs.
  */

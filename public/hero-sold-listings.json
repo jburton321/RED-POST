@@ -1,0 +1,59 @@
+{
+  "listings": [
+    {
+      "id": "rye-sold-45-parsons-lot",
+      "labelUpdatedAt": "2026-04-25T12:00:00.000Z",
+      "firstAddress": "45 Parsons Road",
+      "secondAddress": "Rye, NH 03870",
+      "price": 545000,
+      "bedrooms": 0,
+      "bathrooms": 0,
+      "square": 6970,
+      "media": ["/images/hero-sold/01.png"]
+    },
+    {
+      "id": "rye-sold-805-ocean",
+      "labelUpdatedAt": "2026-04-22T12:00:00.000Z",
+      "firstAddress": "805 Ocean Boulevard",
+      "secondAddress": "Rye, NH 03870",
+      "price": 1580000,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "square": 2549,
+      "media": ["/images/hero-sold/02.png"]
+    },
+    {
+      "id": "rye-sold-16-parsons",
+      "labelUpdatedAt": "2026-04-18T12:00:00.000Z",
+      "firstAddress": "16 Parsons Road",
+      "secondAddress": "Rye, NH 03870",
+      "price": 650000,
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "square": 846,
+      "media": ["/images/hero-sold/03.png"]
+    },
+    {
+      "id": "rye-sold-784-ocean-11",
+      "labelUpdatedAt": "2026-04-15T12:00:00.000Z",
+      "firstAddress": "784 Ocean Boulevard #11",
+      "secondAddress": "Rye, NH 03870",
+      "price": 751000,
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "square": 528,
+      "media": ["/images/hero-sold/04.png"]
+    },
+    {
+      "id": "rye-sold-784-ocean-4",
+      "labelUpdatedAt": "2026-04-12T12:00:00.000Z",
+      "firstAddress": "784 Ocean Boulevard #4",
+      "secondAddress": "Rye, NH 03870",
+      "price": 449000,
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "square": 528,
+      "media": ["/images/hero-sold/05.png"]
+    }
+  ]
+}

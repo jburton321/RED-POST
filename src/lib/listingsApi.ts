@@ -171,6 +171,16 @@ function rowHasUsefulData(r: ListingRow): boolean {
   return price > 0 || addr;
 }
 
+/** Map a Ruuster/RESO-shaped JSON body (e.g. `{ records: [...] }`) to `ListingRecord[]`. */
+export function listRecordsFromApiResponse(json: unknown): ListingRecord[] {
+  const rows = extractRows(json);
+  if (rows.length === 0) return [];
+  return rows
+    .filter((r) => r && typeof r === 'object' && rowHasUsefulData(r as ListingRow))
+    .map((r) => toListingRecord(r as ListingRow))
+    .sort((a, b) => new Date(b.labelUpdatedAt).getTime() - new Date(a.labelUpdatedAt).getTime());
+}
+
 export async function fetchListingsFromApi(): Promise<ListingRecord[]> {
   const url = buildListingsUrl();
   const res = await fetch(url, {
@@ -187,14 +197,9 @@ export async function fetchListingsFromApi(): Promise<ListingRecord[]> {
   }
 
   const json = await res.json();
-  const rows = extractRows(json);
-
-  if (rows.length === 0) {
+  const out = listRecordsFromApiResponse(json);
+  if (out.length === 0) {
     throw new Error('No listings in response');
   }
-
-  return rows
-    .filter((r) => r && typeof r === 'object' && rowHasUsefulData(r as ListingRow))
-    .map((r) => toListingRecord(r as ListingRow))
-    .sort((a, b) => new Date(b.labelUpdatedAt).getTime() - new Date(a.labelUpdatedAt).getTime());
+  return out;
 }

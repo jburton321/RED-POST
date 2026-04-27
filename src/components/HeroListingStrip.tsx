@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import PropertyListItem from './PropertyListItem';
 import PropertyLightbox from './PropertyLightbox';
-import { useListings } from '../context/ListingsContext';
+import { fetchHeroStripListings } from '../lib/heroStripListings';
 import type { ListingRecord } from '../lib/listings';
 
 const STRIP_MAX = 28;
@@ -9,7 +9,7 @@ const STRIP_MAX = 28;
 const SCROLL_SPEED_PX_PER_SEC = 42;
 
 export default function HeroListingStrip() {
-  const { records, initialLoading } = useListings();
+  const [heroSold, setHeroSold] = useState<ListingRecord[] | undefined>(undefined);
   const [selectedListing, setSelectedListing] = useState<ListingRecord | null>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
@@ -17,7 +17,19 @@ export default function HeroListingStrip() {
   const carryRef = useRef(0);
   const lastTsRef = useRef<number | null>(null);
 
-  const items = records.slice(0, STRIP_MAX);
+  useEffect(() => {
+    let cancelled = false;
+    void fetchHeroStripListings().then((rows) => {
+      if (cancelled) return;
+      setHeroSold(rows);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const items = useMemo(() => (heroSold ? heroSold.slice(0, STRIP_MAX) : []), [heroSold]);
+
   const loopItems = items.length > 0 ? [...items, ...items] : [];
 
   useEffect(() => {
@@ -71,12 +83,12 @@ export default function HeroListingStrip() {
     };
   }, [items.length]);
 
-  if (initialLoading && records.length === 0) return null;
-  if (records.length === 0) return null;
+  if (heroSold === undefined) return null;
+  if (items.length === 0) return null;
 
   return (
     <>
-      <div className="hero-strip" aria-label="Recent MLS listings">
+      <div className="hero-strip" aria-label="Recently sold homes">
         <div className="hero-strip-accent-row" aria-hidden>
           <img
             src="/images/hero-strip-accent.png"
