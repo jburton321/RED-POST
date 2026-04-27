@@ -1,14 +1,9 @@
 import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { submitLead } from '../lib/leadsApi';
-import { PHONE_TEL, PHONE_DISPLAY } from '../lib/api';
+import { PHONE_DISPLAY, PHONE_TEL } from '../lib/api';
 
-const DEFAULT_PHONE_TEL = '+16036050181';
-const DEFAULT_PHONE_DISPLAY = '(603) 605-0181';
-
-const HERO_CALL_TEL = PHONE_TEL || DEFAULT_PHONE_TEL;
-const HERO_CALL_DISPLAY = PHONE_DISPLAY || DEFAULT_PHONE_DISPLAY;
-const HERO_CALL_HREF = `tel:${HERO_CALL_TEL.replace(/^tel:/i, '')}`;
+const HERO_CALL_HREF = `tel:${PHONE_TEL.replace(/^tel:/i, '')}`;
 
 const SUCCESS_COPY =
   'Your submission has been received. A Red Post Realty representative will be in contact with you soon.';
@@ -135,9 +130,8 @@ export default function HeroLeadForm() {
       </form>
 
       <p className="hero-lead-call-prompt">
-        Want answers now? Call us directly.{' '}
         <a href={HERO_CALL_HREF} className="hero-lead-call-link">
-          {HERO_CALL_DISPLAY}
+          Want answers now? Call us directly. {PHONE_DISPLAY}
         </a>
       </p>
     </div>

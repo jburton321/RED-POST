@@ -22,6 +22,8 @@ export default function CommandButton({
   className = '',
   showPhone = true,
 }: CommandButtonProps) {
+  const telHref = `tel:${PHONE_TEL.replace(/^tel:/i, '')}`;
+
   return (
     <div className="command-btn-wrapper">
       <button
@@ -31,13 +33,15 @@ export default function CommandButton({
       >
         {children}
       </button>
-      {showPhone && PHONE_TEL && (
+      {showPhone && (
         <a
-          href={`tel:${PHONE_TEL}`}
+          href={telHref}
           className="command-btn-phone"
-          aria-label={PHONE_DISPLAY ? `Call ${PHONE_DISPLAY}` : 'Call Red Post Realty'}
+          aria-label={`Call ${PHONE_DISPLAY}`}
         >
-          <span className="command-btn-phone__text">Want answers now? Call us directly.</span>
+          <span className="command-btn-phone__text">
+            Want answers now? Call us directly. {PHONE_DISPLAY}
+          </span>
           <Phone size={16} strokeWidth={2} className="command-btn-phone__icon" />
         </a>
       )}

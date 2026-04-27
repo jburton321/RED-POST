@@ -36,11 +36,17 @@ export const HERO_STRIP_LISTINGS_URL = (() => {
  */
 export const LISTINGS_CLIENT_QUERY = (env.VITE_LISTINGS_QUERY ?? '').trim();
 
-/** E.164 or tel-safe href, e.g. +16035551234 */
-export const PHONE_TEL = (env.VITE_PHONE_TEL ?? '').trim();
+/** E.164 or tel-safe href, e.g. +16035551234. Defaults when env unset. */
+const DEFAULT_PHONE_TEL = '+16036050181';
+const DEFAULT_PHONE_DISPLAY = '(603) 605-0181';
 
-/** Display label next to phone CTAs; falls back to PHONE_TEL */
-export const PHONE_DISPLAY = (env.VITE_PHONE_DISPLAY ?? env.VITE_PHONE_TEL ?? '').trim();
+const telEnv = (env.VITE_PHONE_TEL ?? '').trim();
+const displayEnv = (env.VITE_PHONE_DISPLAY ?? '').trim();
+
+export const PHONE_TEL = telEnv || DEFAULT_PHONE_TEL;
+
+/** Display label next to phone CTAs; falls back to tel env or default display */
+export const PHONE_DISPLAY = displayEnv || telEnv || DEFAULT_PHONE_DISPLAY;
 
 /** Optional live chat URL (Tidio, Intercom, etc.); if empty, chat FAB is hidden */
 export const CHAT_URL = (env.VITE_CHAT_URL ?? '').trim();

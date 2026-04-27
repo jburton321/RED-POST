@@ -83,15 +83,14 @@ export default function FormSuccess({ firstName }: FormSuccessProps) {
         })}
       </div>
 
-      {PHONE_TEL ? (
-        <div className="form-success-call">
-          <span className="form-success-call-label">Want answers now? Call us directly.</span>
-          <a href={`tel:${PHONE_TEL}`} className="form-success-call-btn">
-            <Phone size={16} strokeWidth={2.2} />
-            <span>{PHONE_DISPLAY || PHONE_TEL}</span>
-          </a>
-        </div>
-      ) : null}
+      <div className="form-success-call">
+        <a href={`tel:${PHONE_TEL.replace(/^tel:/i, '')}`} className="form-success-call-btn">
+          <Phone size={16} strokeWidth={2.2} />
+          <span className="form-success-call-btn-text">
+            Want answers now? Call us directly. {PHONE_DISPLAY}
+          </span>
+        </a>
+      </div>
 
       <div className="form-success-footer">
         <a href="https://apps.apple.com/us/app/red-post-realty/id6479816941?l=es-MX" target="_blank" rel="noopener noreferrer" className="form-success-app-link">
