@@ -49,6 +49,31 @@ export function listingIsSold(listing: ListingRecord): boolean {
   return /\b(sold|closed)\b/.test(blob);
 }
 
+/** Vacant land / lot: acreage with no dwelling counts */
+export function listingIsVacantLandParcel(listing: ListingRecord): boolean {
+  return (listing.lotSizeAcres ?? 0) > 0 && listing.bedrooms === 0 && listing.bathrooms === 0;
+}
+
+export function formatLotParcelAcresDisplay(acres: number): string {
+  if (acres <= 0) return '';
+  if (acres < 1) {
+    const trimmed = acres
+      .toFixed(4)
+      .replace(/0+$/, '')
+      .replace(/\.$/, '');
+    return trimmed.startsWith('0.') ? `.${trimmed.slice(2)}` : trimmed;
+  }
+  const rounded = Math.round(acres * 100) / 100;
+  return Number.isInteger(rounded) ? String(rounded) : String(rounded);
+}
+
+/** e.g. ".16 acre parcel" */
+export function formatLotParcelPhrase(acres: number): string {
+  const n = formatLotParcelAcresDisplay(acres);
+  if (!n) return '';
+  return `${n} acre parcel`;
+}
+
 export function formatPrice(price: number): string {
   return `$${price.toLocaleString()}`;
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight, Bed, Bath, Maximize, MapPin } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Bed, Bath, LandPlot, Maximize, MapPin } from 'lucide-react';
 import type { ListingRecord } from '../lib/listings';
-import { formatPrice } from '../lib/listings';
+import { formatLotParcelAcresDisplay, formatPrice, listingIsVacantLandParcel } from '../lib/listings';
 import { handleImgError } from '../lib/imageFallback';
 import CommandButton from './CommandButton';
 
@@ -209,21 +209,31 @@ export default function PropertyLightbox({ listing, onClose }: PropertyLightboxP
           <div className="lb-divider" />
 
           <div className="lb-specs">
-            <div className="lb-spec">
-              <Bed size={18} strokeWidth={2} />
-              <div className="lb-spec-val">{listing.bedrooms}</div>
-              <div className="lb-spec-label">Bedrooms</div>
-            </div>
-            <div className="lb-spec">
-              <Bath size={18} strokeWidth={2} />
-              <div className="lb-spec-val">{listing.bathrooms}</div>
-              <div className="lb-spec-label">Bathrooms</div>
-            </div>
-            <div className="lb-spec">
-              <Maximize size={18} strokeWidth={2} />
-              <div className="lb-spec-val">{listing.square.toLocaleString()}</div>
-              <div className="lb-spec-label">Sq Ft</div>
-            </div>
+            {listingIsVacantLandParcel(listing) ? (
+              <div className="lb-spec lb-spec--parcel">
+                <LandPlot size={18} strokeWidth={2} />
+                <div className="lb-spec-val">{formatLotParcelAcresDisplay(listing.lotSizeAcres!)}</div>
+                <div className="lb-spec-label">Acre parcel</div>
+              </div>
+            ) : (
+              <>
+                <div className="lb-spec">
+                  <Bed size={18} strokeWidth={2} />
+                  <div className="lb-spec-val">{listing.bedrooms}</div>
+                  <div className="lb-spec-label">Bedrooms</div>
+                </div>
+                <div className="lb-spec">
+                  <Bath size={18} strokeWidth={2} />
+                  <div className="lb-spec-val">{listing.bathrooms}</div>
+                  <div className="lb-spec-label">Bathrooms</div>
+                </div>
+                <div className="lb-spec">
+                  <Maximize size={18} strokeWidth={2} />
+                  <div className="lb-spec-val">{listing.square.toLocaleString()}</div>
+                  <div className="lb-spec-label">Sq Ft</div>
+                </div>
+              </>
+            )}
           </div>
 
           <div className="lb-cta-wrap">

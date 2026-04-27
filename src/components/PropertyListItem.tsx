@@ -1,6 +1,12 @@
 import { Bed, Bath, LandPlot, Maximize } from 'lucide-react';
 import type { ListingRecord } from '../lib/listings';
-import { formatPrice, formatUpdatedAt, listingIsSold } from '../lib/listings';
+import {
+  formatLotParcelPhrase,
+  formatPrice,
+  formatUpdatedAt,
+  listingIsSold,
+  listingIsVacantLandParcel,
+} from '../lib/listings';
 import { handleImgError } from '../lib/imageFallback';
 
 interface PropertyListItemProps {
@@ -8,21 +14,6 @@ interface PropertyListItemProps {
   onClick?: () => void;
   /** Hero strip: CSS corner ribbon, no Active/New badge or “Updated” pill */
   presentation?: 'default' | 'heroSold';
-}
-
-function formatHeroSoldParcelLabel(acres: number): string {
-  if (acres <= 0) return '';
-  if (acres < 1) {
-    const trimmed = acres
-      .toFixed(4)
-      .replace(/0+$/, '')
-      .replace(/\.$/, '');
-    const display = trimmed.startsWith('0.') ? `.${trimmed.slice(2)}` : trimmed;
-    return `${display} acre parcel`;
-  }
-  const rounded = Math.round(acres * 100) / 100;
-  const display = Number.isInteger(rounded) ? String(rounded) : String(rounded);
-  return `${display} acre parcel`;
 }
 
 export default function PropertyListItem({
@@ -33,11 +24,7 @@ export default function PropertyListItem({
   const updatedLabel = formatUpdatedAt(listing.labelUpdatedAt);
   const sold = listingIsSold(listing);
   const heroSold = presentation === 'heroSold';
-  const heroSoldLandParcel =
-    heroSold &&
-    (listing.lotSizeAcres ?? 0) > 0 &&
-    listing.bedrooms === 0 &&
-    listing.bathrooms === 0;
+  const heroSoldLandParcel = heroSold && listingIsVacantLandParcel(listing);
 
   return (
     <div
@@ -88,7 +75,7 @@ export default function PropertyListItem({
           {heroSoldLandParcel ? (
             <span className="inv-list-meta-item">
               <LandPlot size={14} strokeWidth={2} />
-              {formatHeroSoldParcelLabel(listing.lotSizeAcres!)}
+              {formatLotParcelPhrase(listing.lotSizeAcres!)}
             </span>
           ) : (
             <>
