@@ -50,7 +50,7 @@ export default function DMCANotice() {
           <p>Red Post Realty</p>
           <p>1 Wall St, Portsmouth, NH 03801</p>
           <p>Email: compliance@redpostrealty.com</p>
-          <p>Phone: (603) 501-0463</p>
+          <p>Phone: (603) 605-0181</p>
         </div>
       </section>
 

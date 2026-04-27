@@ -81,7 +81,7 @@ export default function Footer() {
               <span className="footer-row-sep">|</span>
               <span>1 Wall St, Portsmouth, NH 03801</span>
               <span className="footer-row-sep">|</span>
-              <span>(603) 501-0463</span>
+              <span>(603) 605-0181</span>
             </div>
 
             <div className="footer-legal-row">
