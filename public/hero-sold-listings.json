@@ -1,15 +1,14 @@
 {
   "listings": [
     {
-      "id": "rye-sold-45-parsons-lot",
-      "labelUpdatedAt": "2026-04-25T12:00:00.000Z",
-      "firstAddress": "45 Parsons Road",
+      "id": "rye-sold-49-jenness",
+      "labelUpdatedAt": "2026-04-29T12:00:00.000Z",
+      "firstAddress": "49 Jenness Avenue",
       "secondAddress": "Rye, NH 03870",
-      "price": 545000,
-      "bedrooms": 0,
-      "bathrooms": 0,
-      "square": 6970,
-      "lotSizeAcres": 0.16,
+      "price": 2035000,
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "square": 2000,
       "media": ["/images/hero-sold/01.png"]
     },
     {
