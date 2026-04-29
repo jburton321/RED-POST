@@ -23,14 +23,14 @@
       "media": ["/images/hero-sold/02.png"]
     },
     {
-      "id": "rye-sold-16-parsons",
-      "labelUpdatedAt": "2026-04-18T12:00:00.000Z",
-      "firstAddress": "16 Parsons Road",
-      "secondAddress": "Rye, NH 03870",
-      "price": 650000,
-      "bedrooms": 2,
-      "bathrooms": 1,
-      "square": 846,
+      "id": "south-berwick-sold-47-union",
+      "labelUpdatedAt": "2026-04-29T16:00:00.000Z",
+      "firstAddress": "47 Union Street",
+      "secondAddress": "South Berwick, ME 03908",
+      "price": 791000,
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "square": 3187,
       "media": ["/images/hero-sold/03.png"]
     },
     {
