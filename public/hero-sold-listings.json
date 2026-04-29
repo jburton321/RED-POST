@@ -45,14 +45,14 @@
       "media": ["/images/hero-sold/04.png"]
     },
     {
-      "id": "rye-sold-784-ocean-4",
-      "labelUpdatedAt": "2026-04-12T12:00:00.000Z",
-      "firstAddress": "784 Ocean Boulevard #4",
-      "secondAddress": "Rye, NH 03870",
-      "price": 449000,
-      "bedrooms": 1,
+      "id": "dover-sold-71-old-rochester",
+      "labelUpdatedAt": "2026-04-29T20:00:00.000Z",
+      "firstAddress": "71 Old Rochester Road",
+      "secondAddress": "Dover, NH 03820",
+      "price": 435000,
+      "bedrooms": 2,
       "bathrooms": 1,
-      "square": 528,
+      "square": 987,
       "media": ["/images/hero-sold/05.png"]
     }
   ]
