@@ -4594,6 +4594,68 @@ h1 {
   animation: lbFadeOut 0.28s ease forwards;
 }
 
+/* ── Lead form modal (opened from listing lightbox GET_STARTED) ── */
+.lead-form-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100010;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: lbFadeIn 0.25s ease forwards;
+}
+
+.lead-form-modal {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: min(92vh, 920px);
+  overflow-y: auto;
+}
+
+.lead-form-modal-inner.glow-card {
+  width: 100%;
+  max-width: 500px;
+  margin: 0;
+}
+
+.lead-form-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.lead-form-modal-close:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+@media (max-width: 540px) {
+  .lead-form-modal-overlay {
+    padding: 16px;
+    align-items: flex-end;
+  }
+
+  .lead-form-modal {
+    max-height: 88dvh;
+  }
+}
+
 @keyframes lbFadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

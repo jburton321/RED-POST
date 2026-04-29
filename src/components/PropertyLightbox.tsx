@@ -1,9 +1,10 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef, useContext } from 'react';
 import { X, ChevronLeft, ChevronRight, Bed, Bath, LandPlot, Maximize, MapPin } from 'lucide-react';
 import type { ListingRecord } from '../lib/listings';
 import { formatLotParcelAcresDisplay, formatPrice, listingIsVacantLandParcel } from '../lib/listings';
 import { handleImgError } from '../lib/imageFallback';
 import CommandButton from './CommandButton';
+import { LeadFormModalContext } from '../context/LeadFormModalContext';
 
 interface PropertyLightboxProps {
   listing: ListingRecord | null;
@@ -11,6 +12,7 @@ interface PropertyLightboxProps {
 }
 
 export default function PropertyLightbox({ listing, onClose }: PropertyLightboxProps) {
+  const leadFormModal = useContext(LeadFormModalContext);
   const [activeImg, setActiveImg] = useState(0);
   const [closing, setClosing] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -237,16 +239,23 @@ export default function PropertyLightbox({ listing, onClose }: PropertyLightboxP
           </div>
 
           <div className="lb-cta-wrap">
-            <CommandButton onClick={() => {
-              handleClose();
-              setTimeout(() => {
-                const el = document.getElementById('hero-form');
-                if (el) {
-                  const y = el.getBoundingClientRect().top + window.scrollY - 80;
-                  window.scrollTo({ top: y, behavior: 'smooth' });
+            <CommandButton
+              onClick={() => {
+                if (leadFormModal) {
+                  leadFormModal.openLeadForm({ source: 'listing-lightbox' });
+                  handleClose();
+                  return;
                 }
-              }, 300);
-            }}>
+                handleClose();
+                setTimeout(() => {
+                  const el = document.getElementById('hero-form');
+                  if (el) {
+                    const y = el.getBoundingClientRect().top + window.scrollY - 80;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                  }
+                }, 300);
+              }}
+            >
               GET_STARTED
             </CommandButton>
           </div>

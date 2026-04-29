@@ -21,30 +21,33 @@ import TermsOfService from './pages/TermsOfService';
 import DMCANotice from './pages/DMCANotice';
 import EmailPreview from './pages/EmailPreview';
 import { ListingsProvider } from './context/ListingsContext';
+import { LeadFormModalProvider } from './context/LeadFormModalContext';
 
 function HomePage() {
   return (
-    <ListingsProvider>
-      <Navbar />
-      <div className="site-content">
-        <Hero />
-        <ActiveInventory />
-        <StrategicAdvantage />
-        <ReverseEclipse />
-        <MapDossier />
-        <AcquisitionCapacity />
-        <TrustCommandCenter />
-        <StatsCounter />
-        <RedAlertPortal />
-        <MarketValidation />
-        <ServiceAreas />
-        <RelocationIntelligence />
-        <IntelFAQ />
-      </div>
-      <FinalCTA />
-      <Footer />
-      <ChatLauncher />
-    </ListingsProvider>
+    <LeadFormModalProvider>
+      <ListingsProvider>
+        <Navbar />
+        <div className="site-content">
+          <Hero />
+          <ActiveInventory />
+          <StrategicAdvantage />
+          <ReverseEclipse />
+          <MapDossier />
+          <AcquisitionCapacity />
+          <TrustCommandCenter />
+          <StatsCounter />
+          <RedAlertPortal />
+          <MarketValidation />
+          <ServiceAreas />
+          <RelocationIntelligence />
+          <IntelFAQ />
+        </div>
+        <FinalCTA />
+        <Footer />
+        <ChatLauncher />
+      </ListingsProvider>
+    </LeadFormModalProvider>
   );
 }
 

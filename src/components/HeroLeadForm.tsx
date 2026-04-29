@@ -8,7 +8,12 @@ const HERO_CALL_HREF = `tel:${PHONE_TEL.replace(/^tel:/i, '')}`;
 const SUCCESS_COPY =
   'Your submission has been received. A Red Post Realty representative will be in contact with you soon.';
 
-export default function HeroLeadForm() {
+interface HeroLeadFormProps {
+  /** Passed to CRM / lead endpoint (e.g. hero-find-home, listing-lightbox) */
+  leadSource?: string;
+}
+
+export default function HeroLeadForm({ leadSource = 'hero-find-home' }: HeroLeadFormProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -33,7 +38,7 @@ export default function HeroLeadForm() {
         email: email.trim(),
         phone: phone.trim(),
         agreedToTerms: agreed,
-        source: 'hero-find-home',
+        source: leadSource,
       });
       if (result.ok) {
         setDone(true);
