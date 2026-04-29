@@ -54,6 +54,17 @@
       "bathrooms": 1,
       "square": 987,
       "media": ["/images/hero-sold/05.png"]
+    },
+    {
+      "id": "rye-sold-20-fairhill",
+      "labelUpdatedAt": "2026-04-29T22:00:00.000Z",
+      "firstAddress": "20 Fairhill Avenue",
+      "secondAddress": "Rye, NH 03870",
+      "price": 1425000,
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "square": 2398,
+      "media": ["/images/hero-sold/06.png"]
     }
   ]
 }
