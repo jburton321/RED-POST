@@ -408,7 +408,7 @@ export default function AcquisitionCapacity() {
             <h2 className="acq-title">BUYING <span className="acq-title-accent">POWER</span></h2>
             <p className="acq-sub">Harnessing real-time market data to calculate your strategic move.</p>
           </div>
-          <CommandButton />
+          <CommandButton leadSource="acquisition-capacity" />
         </div>
 
         <div className="acq-container">

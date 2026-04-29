@@ -13,7 +13,7 @@ export default function StrategicAdvantage() {
             </h2>
             <p className="editorial-subtitle">The Undisputed Authority on Seacoast Real Estate</p>
           </div>
-          <CommandButton />
+          <CommandButton leadSource="strategic-advantage" />
         </div>
       </div>
 

@@ -133,14 +133,8 @@ export default function Navbar() {
 
           <div className={`mob-menu-footer ${linksVisible ? 'mob-menu-footer--visible' : ''}`}>
             <CommandButton
-              onClick={() => {
-                setMobileOpen(false);
-                const el = document.getElementById('hero-form');
-                if (el) {
-                  const y = el.getBoundingClientRect().top + window.scrollY - 80;
-                  window.scrollTo({ top: y, behavior: 'smooth' });
-                }
-              }}
+              beforeLeadForm={() => setMobileOpen(false)}
+              leadSource="nav-mobile"
               className="mob-footer-cmd"
             />
             <p className="mob-footer-tag">SEACOAST INTELLIGENCE HQ</p>

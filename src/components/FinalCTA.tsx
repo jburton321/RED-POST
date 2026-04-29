@@ -20,7 +20,7 @@ export default function FinalCTA() {
         </p>
 
         <div className="monolith-action">
-          <CommandButton>
+          <CommandButton leadSource="final-cta">
             GET_STARTED
           </CommandButton>
 

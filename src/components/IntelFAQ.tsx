@@ -91,7 +91,7 @@ export default function IntelFAQ() {
               Frequently Asked <span className="faq-red-weight">Questions</span>
             </h2>
           </div>
-          <CommandButton />
+          <CommandButton leadSource="intel-faq" />
         </div>
 
         <div className="faq-wall-panel">

@@ -44,7 +44,7 @@ export default function ServiceAreas() {
               Service <span className="sa-red-text">Areas</span>
             </h2>
           </div>
-          <CommandButton />
+          <CommandButton leadSource="service-areas" />
         </div>
 
         <div className="sa-advantage-grid">

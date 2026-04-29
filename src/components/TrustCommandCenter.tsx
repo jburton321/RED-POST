@@ -79,7 +79,7 @@ export default function TrustCommandCenter() {
             </h2>
             <p className="tcc-stats">2,500+ SUCCESSFUL TRANSACTIONS // $780M CLOSED VOLUME</p>
           </div>
-          <CommandButton />
+          <CommandButton leadSource="trust-command-center" />
         </div>
       </div>
 

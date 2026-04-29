@@ -115,7 +115,7 @@ export default function ActiveInventory() {
               ))}
             </div>
           </div>
-          <CommandButton />
+          <CommandButton leadSource="active-inventory" />
         </div>
 
         {initialLoading && listings.length === 0 && (

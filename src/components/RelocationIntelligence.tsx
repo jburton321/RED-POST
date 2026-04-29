@@ -38,7 +38,7 @@ export default function RelocationIntelligence() {
             </h2>
             <div className="ri-h-line" />
           </div>
-          <CommandButton />
+          <CommandButton leadSource="relocation-intel-header" />
         </div>
 
       </div>
@@ -59,7 +59,7 @@ export default function RelocationIntelligence() {
               <div className="rs-content">
                 <h3 className="rs-content-title">{panel.title}</h3>
                 <p className="rs-content-desc">{panel.desc}</p>
-                <CommandButton className="rs-command-btn">
+                <CommandButton className="rs-command-btn" leadSource="relocation-intel-panel">
                   GET STARTED
                 </CommandButton>
               </div>
