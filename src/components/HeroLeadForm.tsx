@@ -2,6 +2,9 @@ import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { submitLead } from '../lib/leadsApi';
 import { PHONE_DISPLAY, PHONE_TEL } from '../lib/api';
+import { formatPrice } from '../lib/listings';
+import type { ListingRecord } from '../lib/listings';
+import LeadFormContextListing from './LeadFormContextListing';
 
 const HERO_CALL_HREF = `tel:${PHONE_TEL.replace(/^tel:/i, '')}`;
 
@@ -11,9 +14,14 @@ const SUCCESS_COPY =
 interface HeroLeadFormProps {
   /** Passed to CRM / lead endpoint (e.g. hero-find-home, listing-lightbox) */
   leadSource?: string;
+  /** Listing the user tapped GET_STARTED from (e.g. lightbox); shown as context card */
+  contextListing?: ListingRecord | null;
 }
 
-export default function HeroLeadForm({ leadSource = 'hero-find-home' }: HeroLeadFormProps) {
+export default function HeroLeadForm({
+  leadSource = 'hero-find-home',
+  contextListing = null,
+}: HeroLeadFormProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -39,6 +47,10 @@ export default function HeroLeadForm({ leadSource = 'hero-find-home' }: HeroLead
         phone: phone.trim(),
         agreedToTerms: agreed,
         source: leadSource,
+        listingId: contextListing?.id,
+        listingSummary: contextListing
+          ? `${contextListing.firstAddress}, ${contextListing.secondAddress} — ${formatPrice(contextListing.price)}`
+          : undefined,
       });
       if (result.ok) {
         setDone(true);
@@ -64,6 +76,8 @@ export default function HeroLeadForm({ leadSource = 'hero-find-home' }: HeroLead
     <div className="hero-lead-panel">
       <h2 className="hero-lead-panel-title">FIND YOUR NEW SEACOAST HOME</h2>
       <p className="hero-lead-panel-sub">Homes from $400k - $3M</p>
+
+      {contextListing ? <LeadFormContextListing listing={contextListing} /> : null}
 
       <form className="hero-lead-form" onSubmit={handleSubmit} noValidate>
         <div className="hero-lead-fields">

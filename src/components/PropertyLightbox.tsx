@@ -242,7 +242,7 @@ export default function PropertyLightbox({ listing, onClose }: PropertyLightboxP
             <CommandButton
               onClick={() => {
                 if (leadFormModal) {
-                  leadFormModal.openLeadForm({ source: 'listing-lightbox' });
+                  leadFormModal.openLeadForm({ source: 'listing-lightbox', listing });
                   handleClose();
                   return;
                 }

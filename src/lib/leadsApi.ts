@@ -27,6 +27,9 @@ export interface LeadPayload extends DummyLeadPayload {
   mustHaves?: string[];
   timeline?: string;
   agreedToTerms?: boolean;
+  /** Listing context when user opened the form from a property detail */
+  listingId?: string;
+  listingSummary?: string;
 }
 
 function getLeadsUrl(): string {
@@ -45,7 +48,9 @@ export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean; e
   const isFormspree = url.includes('formspree.io');
   const body = isFormspree
     ? new URLSearchParams({
-        _subject: 'Red Post Realty - New Lead',
+        _subject: payload.listingSummary
+          ? `Red Post Realty - Lead: ${payload.listingSummary}`
+          : 'Red Post Realty - New Lead',
         firstName: payload.firstName,
         lastName: payload.lastName,
         email: payload.email,
@@ -61,6 +66,8 @@ export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean; e
         timeline: payload.timeline ?? '',
         agreedToTerms: String(payload.agreedToTerms ?? false),
         source: payload.source ?? '',
+        listingId: payload.listingId ?? '',
+        listingSummary: payload.listingSummary ?? '',
       })
     : JSON.stringify({
         first_name: payload.firstName,
@@ -78,6 +85,8 @@ export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean; e
         timeline: payload.timeline,
         agreed_to_terms: payload.agreedToTerms,
         source: payload.source,
+        listing_id: payload.listingId,
+        listing_summary: payload.listingSummary,
       });
 
   const headers: Record<string, string> = isFormspree

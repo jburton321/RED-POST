@@ -1,14 +1,21 @@
 import { useEffect } from 'react';
 import { X } from 'lucide-react';
 import HeroLeadForm from './HeroLeadForm';
+import type { ListingRecord } from '../lib/listings';
 
 interface LeadFormModalProps {
   open: boolean;
   leadSource: string;
+  contextListing: ListingRecord | null;
   onClose: () => void;
 }
 
-export default function LeadFormModal({ open, leadSource, onClose }: LeadFormModalProps) {
+export default function LeadFormModal({
+  open,
+  leadSource,
+  contextListing,
+  onClose,
+}: LeadFormModalProps) {
   useEffect(() => {
     if (!open) return;
     document.body.style.overflow = 'hidden';
@@ -41,7 +48,7 @@ export default function LeadFormModal({ open, leadSource, onClose }: LeadFormMod
           <X size={20} strokeWidth={2.5} />
         </button>
         <div className="lead-form-modal-inner glow-card glow-card--hero-form">
-          <HeroLeadForm leadSource={leadSource} />
+          <HeroLeadForm leadSource={leadSource} contextListing={contextListing} />
         </div>
       </div>
     </div>
