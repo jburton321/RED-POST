@@ -12,14 +12,14 @@
       "media": ["/images/hero-sold/01.png"]
     },
     {
-      "id": "rye-sold-805-ocean",
-      "labelUpdatedAt": "2026-04-22T12:00:00.000Z",
-      "firstAddress": "805 Ocean Boulevard",
-      "secondAddress": "Rye, NH 03870",
-      "price": 1580000,
+      "id": "portsmouth-sold-255-thornton",
+      "labelUpdatedAt": "2026-04-29T14:00:00.000Z",
+      "firstAddress": "255 Thornton St",
+      "secondAddress": "Portsmouth, NH 03801",
+      "price": 780300,
       "bedrooms": 3,
-      "bathrooms": 2,
-      "square": 2549,
+      "bathrooms": 1,
+      "square": 1152,
       "media": ["/images/hero-sold/02.png"]
     },
     {
