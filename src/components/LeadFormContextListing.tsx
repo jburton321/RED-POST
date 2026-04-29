@@ -3,6 +3,7 @@ import type { ListingRecord } from '../lib/listings';
 import {
   formatLotParcelPhrase,
   formatPrice,
+  listingIsSold,
   listingIsVacantLandParcel,
 } from '../lib/listings';
 import { handleImgError } from '../lib/imageFallback';
@@ -14,10 +15,13 @@ interface LeadFormContextListingProps {
 export default function LeadFormContextListing({ listing }: LeadFormContextListingProps) {
   const img = listing.media[0];
   const land = listingIsVacantLandParcel(listing);
+  const sold = listingIsSold(listing);
 
   return (
-    <div className="lead-form-context-listing">
-      <p className="lead-form-context-listing__eyebrow">Interested in this home</p>
+    <div className={`lead-form-context-listing${sold ? ' lead-form-context-listing--sold' : ''}`}>
+      <p className="lead-form-context-listing__eyebrow">
+        {sold ? 'Interested in similar homes' : 'Interested in this home'}
+      </p>
       <div className="lead-form-context-listing__row">
         <div className="lead-form-context-listing__img-wrap">
           <img
@@ -27,6 +31,13 @@ export default function LeadFormContextListing({ listing }: LeadFormContextListi
             loading="lazy"
             onError={handleImgError}
           />
+          {sold ? (
+            <div className="inv-list-sold-ribbon-graphic" aria-hidden>
+              <span className="inv-list-sold-ribbon-graphic__band">
+                <span className="inv-list-sold-ribbon-graphic__text">SOLD</span>
+              </span>
+            </div>
+          ) : null}
         </div>
         <div className="lead-form-context-listing__body">
           <div className="lead-form-context-listing__price">{formatPrice(listing.price)}</div>
