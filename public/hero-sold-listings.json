@@ -34,14 +34,14 @@
       "media": ["/images/hero-sold/03.png"]
     },
     {
-      "id": "rye-sold-784-ocean-11",
-      "labelUpdatedAt": "2026-04-15T12:00:00.000Z",
-      "firstAddress": "784 Ocean Boulevard #11",
-      "secondAddress": "Rye, NH 03870",
-      "price": 751000,
-      "bedrooms": 1,
-      "bathrooms": 1,
-      "square": 528,
+      "id": "portsmouth-sold-1155-sagamore-3",
+      "labelUpdatedAt": "2026-04-29T18:00:00.000Z",
+      "firstAddress": "1155 Sagamore Avenue #3",
+      "secondAddress": "Portsmouth, NH 03801",
+      "price": 1595000,
+      "bedrooms": 3,
+      "bathrooms": 4,
+      "square": 3099,
       "media": ["/images/hero-sold/04.png"]
     },
     {
