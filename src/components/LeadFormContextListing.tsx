@@ -20,7 +20,7 @@ export default function LeadFormContextListing({ listing }: LeadFormContextListi
   return (
     <div className={`lead-form-context-listing${sold ? ' lead-form-context-listing--sold' : ''}`}>
       <p className="lead-form-context-listing__eyebrow">
-        {sold ? 'Interested in similar homes' : 'Interested in this home'}
+        {sold ? "I'm interested in similar homes" : "I'm interested in this home"}
       </p>
       <div className="lead-form-context-listing__row">
         <div className="lead-form-context-listing__img-wrap">
